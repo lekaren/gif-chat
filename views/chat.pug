@@ -76,7 +76,7 @@ block content
         dm.addEventListener('click',sendDM);
         name.appendChild(dm);
       }
-      if (data.user !== '#{user}') {
+      if (data.user !== '#{user}' && '#{user}' == document.getElementById('room-owner').textContent) {
         var ban_b = document.createElement('button');
         ban_b.className = 'ban';
         ban_b.textContent= '강퇴';
