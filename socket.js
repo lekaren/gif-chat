@@ -104,7 +104,7 @@ module.exports = (server, app, sessionMiddleware) => {
       axios.post(`http://localhost:8005/room/${roomId}/sys`,{
         type:'change',
         user: 'system',
-        chat: `방장이 ${data.owner} => ${data.userid} 로 변경되었습니다.`,
+        chat: `방장이 ${data.owner} 님에서 ${data.userid} 님으로 변경되었습니다.`,
         number: socket.adapter.rooms[roomId].length
       }, {
         headers: {
