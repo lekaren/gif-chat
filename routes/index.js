@@ -148,9 +148,12 @@ router.post('/room/:id/gif', upload.single('gif'), async (req, res, next) => {
 });
 router.post('/room/:id/sys', async(req, res, next) => {
   try {
-    const chat = req.body.type === 'join'
+    let chat = req.body.type === 'join'
       ? `${req.session.color} 님이 입장하셨습니다.`
       : `${req.session.color} 님이 퇴장하셨습니다.`;
+    if (req.body.type === 'change') {
+      chat = req.body.chat;
+    }
     const sys = new Chat({
       room: req.params.id,
       user: 'system',
@@ -166,7 +169,18 @@ router.post('/room/:id/sys', async(req, res, next) => {
   } catch (error) {
     console.log('------------------------------------');
     console.log(error);
-    console.log('------------------------------------');
+    next(error);
+  }
+});
+
+// 방장 위임
+router.post('/room/:id/owner', async(req, res, next) => {
+  try {
+    await Room.update({ _id: req.params.id}, {$set: req.body});
+    res.send('ok');
+  } catch (error) {
+    console.log('--------------------error----------------');
+    console.log(error);
     next(error);
   }
 });
